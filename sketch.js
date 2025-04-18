@@ -99,7 +99,6 @@ function draw() {
       let c = imagelayer.get(ix, iy);
       let b = brightness(c);
 
-      // ✅ 밝기 기준 점 크기 계산 (50 이하 = 최대, 200 이상 = 최소)
       let size;
       if (b <= 50) {
         size = bitSize;
@@ -108,6 +107,9 @@ function draw() {
       } else {
         size = map(b, 200, 50, minSize, bitSize);
       }
+
+      // ✅ 최소 사이즈가 0일 경우, 실질적으로 완전히 안 보이게
+      if (size < 0.5) continue;
 
       ellipse(p.x, p.y, size, size);
     }
