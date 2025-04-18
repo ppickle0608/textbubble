@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Text Bubble with Image Upload</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+  <script src="sketch.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 1rem;
+      text-align: center;
+      font-family: sans-serif;
+      background-color: #f9f9f9;
+    }
+    canvas {
+      display: block;
+      margin: 20px auto;
+      border: 1px solid #ccc;
+    }
+    .controls {
+      margin-top: 10px;
+    }
+    .control-group {
+      margin: 8px;
+    }
+    input[type="range"] {
+      width: 200px;
+    }
+    .value-label {
+      margin-left: 8px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <input type="file" id="imgUploader" accept="image/*">
+
+  <div class="controls">
+    <div class="control-group">
+      <label>점간격:
+        <input type="range" id="gapInput" min="2" max="100" value="20">
+        <span class="value-label" id="gapVal">10</span>
+      </label>
+    </div>
+    <div class="control-group">
+      <label>점최대크기:
+        <input type="range" id="bitSizeInput" min="1" max="50" value="5">
+        <span class="value-label" id="bitSizeVal">5</span>
+      </label>
+    </div>
+    <div class="control-group">
+      <label>점최소크기:
+        <input type="range" id="minSizeInput" min="0" max="50" value="0">
+        <span class="value-label" id="minSizeVal">0</span>
+      </label>
+    </div>
+  </div>
+</body>
+</html>
