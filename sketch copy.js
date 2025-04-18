@@ -84,6 +84,24 @@ function handleFileUpload(event) {
   }
 }
 
+function calculateBrightnessBounds() {
+  let maxB = 0;
+  let minB = 255;
+
+  for (let p of bits) {
+    let ix = int(p.x);
+    let iy = int(p.y);
+    if (ix >= 0 && ix < wid && iy >= 0 && iy < hei) {
+      let c = imagelayer.get(ix, iy);
+      let b = brightness(c);
+      if (b > maxB) maxB = b;
+      if (b < minB) minB = b;
+    }
+  }
+
+  return { maxB, minB };
+}
+
 function draw() {
   if (!imgLoaded) return;
 
@@ -92,6 +110,8 @@ function draw() {
   noStroke();
   fill(0);
 
+  const { maxB, minB } = calculateBrightnessBounds();
+
   for (let p of bits) {
     let ix = int(p.x);
     let iy = int(p.y);
@@ -99,15 +119,8 @@ function draw() {
       let c = imagelayer.get(ix, iy);
       let b = brightness(c);
 
-      // ✅ 밝기 기준 점 크기 계산 (50 이하 = 최대, 200 이상 = 최소)
-      let size;
-      if (b <= 50) {
-        size = bitSize;
-      } else if (b >= 200) {
-        size = minSize;
-      } else {
-        size = map(b, 200, 50, minSize, bitSize);
-      }
+      let size = map(b, maxB, minB, minSize, bitSize);
+      size = constrain(size, minSize, bitSize);
 
       ellipse(p.x, p.y, size, size);
     }
